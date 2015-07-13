@@ -2,39 +2,62 @@ import toxi.geom.*;
 import plethora.core.*;
 import peasy.*;
 import java.awt.event.KeyEvent;
+import java.util.*;
 
 PeasyCam cam;
 
 PFont font;
 
 ArrayList <ArtObject> artObjects;
+ArrayList <Gallery> galleries;
+ArrayList <String> classifications;
 ArrayList <Ple_Agent> artAgents;
 
-Boolean showMouse = true;
-Boolean showTrails = true;
-Boolean showPoints = true;
-Boolean showArtInfo = false;
-Boolean paused = true;
-Boolean recording = false;
+Gallery selectedGallery;
+
+int selectedGalleryIndex = 0;
+int selectedClassification = 1;
+
+boolean showChrome = true;
+boolean showMouse = true;
+boolean showFloors = false;
+boolean showTrails = true;
+boolean showPoints = true;
+boolean showArtInfo = false;
+boolean setHomeAsOrigin = true;
+boolean paused = true;
+boolean recording = false;
+
+String layout = "floor";
+
 
 void init() {
-  frame.removeNotify();
-  frame.setUndecorated(true);
-  frame.addNotify();
+  if (!showChrome) {
+    frame.removeNotify();
+    frame.setUndecorated(true);
+    frame.addNotify();
+  }
   super.init();
 }
 
 void setup() {
-  size(1920, 1080, OPENGL);
-  frame.setLocation(1920, 0);
+  size(displayWidth, displayHeight, OPENGL);
+  if (!showChrome) {
+    frame.setLocation(0, 0);
+  }
 
   font = createFont("Arial", 72);
   textFont(font);
 
-  cam = new PeasyCam(this, 600);
+  cam = new PeasyCam(this, 0, -200, 0, 600);
 
-  artObjects = loadData(this);
+  artObjects = loadArtData(this);
+  galleries = loadGalleryData();
+  classifications = loadList("classification");
 
+  selectedGallery = galleries.get(selectedGalleryIndex);
+
+  arrangeGalleries();
   bloom();
 }
 
@@ -44,25 +67,37 @@ void draw() {
   } else {
     noCursor();
   }
-  
+
   background(235);
 
   for (ArtObject ao : artObjects) {
     ao.display(artAgents);
   }
-  
+
+  if (showFloors) {
+    for (Gallery g : galleries) {
+      fill(200, 200, 200, 100);
+      noStroke();
+      pushMatrix();
+      translate(-500, g.location.y, -500);
+      rotateX(radians(90));
+      rect(0, 0, 1000, 1000);
+      popMatrix();
+    }
+  }
+
   if (recording) {
     saveFrame("output/frames####.png");
-    
+
     cam.beginHUD();
     fill(255, 0, 0);
     textSize(48);
     text("Recording", 10, 50);
     textSize(14);
     text("FPS: " + frameRate, 10, 70);
-    cam.endHUD();    
+    cam.endHUD();
   }    
-  
+
   cam.rotateY(radians(0.05));
 }
 
@@ -71,8 +106,25 @@ void bloom() {
 
   for (ArtObject ao : artObjects) {
     ao.reset();
+    ao.setDestination(galleries);
+    
+    if (setHomeAsOrigin) {
+      ao.setHome(new Vec3D(0, 0, 0));
+    } else {
+      ao.setHome(ao.destination);
+    }
     artAgents.add(ao.getAgent());
   }
 }
 
-
+void arrangeGalleries() {
+  for (Gallery g : galleries) {
+    Vec3D d;
+    if (layout.equals("floor")) {
+      d = new Vec3D(0, -200*(g.floor-1), 0);
+    } else {
+      d = new Vec3D(random(-500, 500), -200*(g.floor-1), random(-500, 500));
+    }
+    g.setLocation(d);
+  }
+}

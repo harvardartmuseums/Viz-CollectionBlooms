@@ -22,6 +22,8 @@ void keyPressed() {
     paused = !paused;
   } else if (keyCode == KeyEvent.VK_T) {
     showTrails = !showTrails;
+  } else if (keyCode == KeyEvent.VK_H) {
+    setHomeAsOrigin = !setHomeAsOrigin;
   } else if (keyCode == KeyEvent.VK_ENTER) {
     saveFrame("snapshots/snapshot-####.png");
   } else if (keyCode == KeyEvent.VK_R) {
@@ -30,6 +32,16 @@ void keyPressed() {
     showMouse = !showMouse;
   } else if (keyCode == KeyEvent.VK_I) {
     showArtInfo = !showArtInfo;
-  }    
+  }  else if (keyCode == KeyEvent.VK_F) {
+    showFloors = !showFloors;
+  } else if (keyCode == KeyEvent.VK_L) {
+    layout = layout.equals("floor") ? "room" : "floor";
+    arrangeGalleries();
+  } else if (keyCode == KeyEvent.VK_UP) {
+    selectedGalleryIndex++;
+    selectedGallery = galleries.get(selectedGalleryIndex);
+  } else if (keyCode == KeyEvent.VK_DOWN) {
+    selectedGalleryIndex--;
+    selectedGallery = galleries.get(selectedGalleryIndex);
+  }
 }
-
