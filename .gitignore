@@ -1,5 +1,6 @@
 **/snapshots/
 **/output/
+**/build/
 
 *.class
 
