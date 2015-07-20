@@ -84,6 +84,7 @@ ArrayList <String> loadList(String listName) {
   String apiURL;
   apiURL = "http://api.harvardartmuseums.org/" + listName + "?apikey=" + 
                       apiKey + "&" +
+                      "sort=name&" +
                       size;
     
   // Get the initial set of data
