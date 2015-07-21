@@ -49,5 +49,17 @@ void keyPressed() {
         selectedGalleryIndex = 0;
     }
     selectedGallery = galleries.get(selectedGalleryIndex);
+  } else if (keyCode == KeyEvent.VK_LEFT) {
+    selectedClassificationIndex++;
+    if (selectedClassificationIndex >= classifications.size()) {
+      selectedClassificationIndex = classifications.size() -1;
+     }
+    selectedClassification = classifications.get(selectedClassificationIndex);
+  } else if (keyCode == KeyEvent.VK_RIGHT) {
+    selectedClassificationIndex--;
+    if (selectedClassificationIndex < 0) {
+        selectedClassificationIndex = 0;
+    }
+    selectedClassification = classifications.get(selectedClassificationIndex);
   }
 }

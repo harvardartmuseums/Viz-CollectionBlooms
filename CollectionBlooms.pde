@@ -14,9 +14,10 @@ ArrayList <String> classifications;
 ArrayList <Ple_Agent> artAgents;
 
 Gallery selectedGallery;
+String selectedClassification;
 
 int selectedGalleryIndex = 0;
-int selectedClassification = 1;
+int selectedClassificationIndex = 0;
 
 boolean showChrome = true;
 boolean showMouse = true;
@@ -56,6 +57,7 @@ void setup() {
   classifications = loadList("classification");
 
   selectedGallery = galleries.get(selectedGalleryIndex);
+  selectedClassification = classifications.get(selectedClassificationIndex);
 
   arrangeGalleries();
   bloom();
@@ -71,7 +73,9 @@ void draw() {
   background(235);
 
   for (ArtObject ao : artObjects) {
-    ao.display(artAgents);
+    if (selectedClassificationIndex == 0 || ao.classification.equals(selectedClassification)) {
+      ao.display(artAgents);
+    }
   }
 
   if (showFloors) {
@@ -84,6 +88,14 @@ void draw() {
       rect(0, 0, 1000, 1000);
       popMatrix();
     }
+  }
+
+  if (selectedClassificationIndex > 0) {
+    cam.beginHUD();
+    fill(0);
+    textSize(48);
+    text(selectedClassification, 40, 60);
+    cam.endHUD();
   }
 
   if (recording) {
