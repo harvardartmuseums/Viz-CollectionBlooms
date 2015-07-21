@@ -39,9 +39,15 @@ void keyPressed() {
     arrangeGalleries();
   } else if (keyCode == KeyEvent.VK_UP) {
     selectedGalleryIndex++;
+    if (selectedGalleryIndex >= galleries.size()) {
+      selectedGalleryIndex = galleries.size() -1;
+     }
     selectedGallery = galleries.get(selectedGalleryIndex);
   } else if (keyCode == KeyEvent.VK_DOWN) {
     selectedGalleryIndex--;
+    if (selectedGalleryIndex < 0) {
+        selectedGalleryIndex = 0;
+    }
     selectedGallery = galleries.get(selectedGalleryIndex);
   }
 }
