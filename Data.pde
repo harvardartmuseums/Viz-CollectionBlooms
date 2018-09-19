@@ -11,7 +11,7 @@ ArrayList <ArtObject> loadArtData(processing.core.PApplet _p5, String _filters){
   ArrayList <ArtObject> aos = new ArrayList <ArtObject>(); 
   int currentPage = 1;
   String apiURL;
-  apiURL = "http://api.harvardartmuseums.org/object?apikey=" + 
+  apiURL = "https://api.harvardartmuseums.org/object?apikey=" + 
                     apiKey + "&" +
                     _filters + "&" +
                     fields + "&" + 

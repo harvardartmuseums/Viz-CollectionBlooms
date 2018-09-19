@@ -6,7 +6,7 @@ Inspired by the eternal winter of 2015 and the need to see things bloom.
 
 # Requirements
 
-[Processing 2.*](http://processing.org)<br />
+[Processing 3](http://processing.org)<br />
 PeasyCam<br />
 Plethora<br />
 Toxiclibs<br />

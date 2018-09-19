@@ -11,4 +11,12 @@ class Gallery {
   void setLocation(Vec3D _location) {
     location = _location;
   }  
+  
+  void display() {
+    if (showGalleries) {
+      fill(#000000);
+      textSize(14);
+      text(this.galleryNumber, this.location.x, this.location.y, this.location.z);
+    }
+  }
 }

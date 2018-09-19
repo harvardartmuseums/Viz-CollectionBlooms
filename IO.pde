@@ -18,6 +18,8 @@ void keyPressed() {
     bloom();
   } else if (keyCode == KeyEvent.VK_D) {
     showPoints = !showPoints;
+  } else if (keyCode == KeyEvent.VK_G) {
+    showGalleries = !showGalleries;
   } else if (keyCode == KeyEvent.VK_P) {
     paused = !paused;
   } else if (keyCode == KeyEvent.VK_T) {

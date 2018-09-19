@@ -22,6 +22,7 @@ int selectedClassificationIndex = 0;
 boolean showChrome = true;
 boolean showMouse = true;
 boolean showFloors = false;
+boolean showGalleries = false;
 boolean showTrails = true;
 boolean showPoints = true;
 boolean showArtInfo = false;
@@ -32,20 +33,8 @@ boolean recording = false;
 String layout = "floor";
 
 
-void init() {
-  if (!showChrome) {
-    frame.removeNotify();
-    frame.setUndecorated(true);
-    frame.addNotify();
-  }
-  super.init();
-}
-
 void setup() {
-  size(displayWidth, displayHeight, OPENGL);
-  if (!showChrome) {
-    frame.setLocation(0, 0);
-  }
+  fullScreen(P3D, SPAN);
 
   font = createFont("Arial", 72);
   textFont(font);
@@ -89,6 +78,11 @@ void draw() {
       popMatrix();
     }
   }
+  
+  
+    for (Gallery g : galleries) {
+      g.display();
+    }
 
   if (selectedClassificationIndex > 0) {
     cam.beginHUD();
